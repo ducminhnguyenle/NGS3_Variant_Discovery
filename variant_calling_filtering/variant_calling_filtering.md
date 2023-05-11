@@ -72,7 +72,7 @@ gatk --java-options "-Xmx4G" HaplotypeCaller \
 flowchart TD
     subgraph "VARIANT FILTERING"
     A("Raw SNPs + Indels"<br>VCF)--"<u>CNNScoreVariants<br>FilterVariantsTranches</u>"--> B{{"Analysis-Ready Variants<br>SNVs + Indels"}}
-    style A fill: #34495e ,stroke:#333,stroke-width:4px,color:#fff
+    style A fill:#34495e,stroke:#333,stroke-width:4px,color:#fff
     style B fill:#767076,stroke:#F9F2F4,stroke-width:2px,color:#fff
     end
 ```
@@ -115,7 +115,7 @@ bcftools filter -i ' FORMAT/GQ>=20 & FORMAT/DP>=30' ${output_vcf}/chr21_tumor_fi
 flowchart TD
     subgraph "VARIANT FILTERING"
     A("Raw SNPs + Indels"<br>VCF)--"Hard Filtering"--> B{{"Analysis-Ready Variants<br>SNVs + Indels"}}
-    style A fill:#CCC7C9,stroke:#333,stroke-width:4px
+    style A fill:#34495e,stroke:#333,stroke-width:4px,color:#fff
     style B fill:#767076,stroke:#F9F2F4,stroke-width:2px,color:#fff
     end
 ```
