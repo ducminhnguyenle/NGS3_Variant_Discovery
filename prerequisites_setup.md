@@ -19,7 +19,7 @@ Following GATK4 best practices workflow: **_[GATK_Germline_Short_Variant_Discove
 ## Tools
 
 ### 1. bcftools
-Please download and install [bctools](https://github.com/samtools/bcftools/releases/download/1.17/bcftools-1.17.tar.bz2) to manipulate vcf file.
+Please download and install [bcftools](https://github.com/samtools/bcftools/releases/download/1.17/bcftools-1.17.tar.bz2) to manipulate vcf file.
 
 Please also refer to this [htslib_Guide](http://www.htslib.org/download/) or [latest release guide](https://github.com/samtools/bcftools/releases/latest/) on how to build and install appropriately.
 
