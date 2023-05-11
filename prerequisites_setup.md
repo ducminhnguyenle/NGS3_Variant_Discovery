@@ -1,6 +1,21 @@
 # VARIANT CALLING
 Following GATK4 best practices workflow: **_[GATK_Germline_Short_Variant_Discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-)_**
 
+## Table of Contents
+- [VARIANT CALLING](#variant-calling)
+  - [Table of Contents](#table-of-contents)
+  - [Tools](#tools)
+    - [1. bcftools](#1-bcftools)
+    - [2. GATK](#2-gatk)
+  - [Reference genome for human chromosome 21 and necessary databases](#reference-genome-for-human-chromosome-21-and-necessary-databases)
+    - [1. Reference genome](#1-reference-genome)
+    - [2. dbsnp\_146 database](#2-dbsnp_146-database)
+    - [3. 1000G\_omni2.5.hg38 known snps database](#3-1000g_omni25hg38-known-snps-database)
+    - [4. 1000G\_phase1 snps with high confidence hg38 database](#4-1000g_phase1-snps-with-high-confidence-hg38-database)
+    - [5. Homo sapiens assembly38 known indels database](#5-homo-sapiens-assembly38-known-indels-database)
+    - [6. Mills and 1000G gold standard for known indels hg38 database](#6-mills-and-1000g-gold-standard-for-known-indels-hg38-database)
+  - [Dataset for practice](#dataset-for-practice)
+
 ## Tools
 
 ### 1. bcftools
@@ -43,7 +58,7 @@ wget -c ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg38/dbsnp_146.h
 wget -c ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg38/dbsnp_146.hg38.vcf.gz.tbi
 ```
 
-### 3. 1000G_omni2.5.hg38 known snps database 
+### 3. 1000G_omni2.5.hg38 known snps database
 1. VCF file
 ```bash
 wget https://storage.googleapis.com/genomics-public-data/resources/broad/hg38/v0/1000G_omni2.5.hg38.vcf.gz
@@ -82,3 +97,7 @@ wget https://storage.googleapis.com/genomics-public-data/resources/broad/hg38/v0
 ```bash
 wget https://storage.googleapis.com/genomics-public-data/resources/broad/hg38/v0/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi
 ```
+
+## Dataset for practice
+Please download both **bam** file and **bai** file to follow this practice.
+These 2 files can be found in [test_data](./test_data/) folder.
