@@ -1,5 +1,20 @@
 # VARIANT PROCESSING
 
+## Table of Contents
+
+- [VARIANT PROCESSING](#variant-processing)
+  - [Table of Contents](#table-of-contents)
+  - [VARIANT CALLING](#variant-calling)
+    - [1. Workflow of variant calling using HaplotypeCaller](#1-workflow-of-variant-calling-using-haplotypecaller)
+      - [Setup directories path](#setup-directories-path)
+    - [2. FASTA - Reference genome format](#2-fasta---reference-genome-format)
+    - [3. HaplotypeCaller](#3-haplotypecaller)
+  - [VARIANT FILTERING (QUALITY-BASED FILTERING)](#variant-filtering-quality-based-filtering)
+    - [1. CNNScoreVariants](#1-cnnscorevariants)
+    - [2. FilterVariantTranches](#2-filtervarianttranches)
+      - [Variant Genotype Filters](#variant-genotype-filters)
+    - [3. Hard Filtering option](#3-hard-filtering-option)
+
 ## VARIANT CALLING
 
 ### 1. Workflow of variant calling using HaplotypeCaller
