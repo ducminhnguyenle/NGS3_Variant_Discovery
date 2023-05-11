@@ -8,7 +8,7 @@
 flowchart TD
     subgraph VARIANT CALLING
     A("Analysis-Ready Reads<br>BAM") -- "Call Variants per sample<br><u>HaplotypeCaller</u> in single sample mode" --> B{{"VCF<br>Raw SNPs-Indels"}}
-    style A fill:#CCC7C9,stroke:#333,stroke-width:4px
+    style A fill:#34495e,stroke:#333,stroke-width:4px,color:#fff
     style B fill:#767076,stroke:#F9F2F4,stroke-width:2px,color:#fff
     end
 ```
@@ -72,7 +72,7 @@ gatk --java-options "-Xmx4G" HaplotypeCaller \
 flowchart TD
     subgraph "VARIANT FILTERING"
     A("Raw SNPs + Indels"<br>VCF)--"<u>CNNScoreVariants<br>FilterVariantsTranches</u>"--> B{{"Analysis-Ready Variants<br>SNVs + Indels"}}
-    style A fill:#CCC7C9,stroke:#333,stroke-width:4px
+    style A fill: #34495e ,stroke:#333,stroke-width:4px,color:#fff
     style B fill:#767076,stroke:#F9F2F4,stroke-width:2px,color:#fff
     end
 ```

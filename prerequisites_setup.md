@@ -12,7 +12,6 @@ Following GATK4 best practices workflow: **_[GATK_Germline_Short_Variant_Discove
     - [3. GATK](#3-gatk)
   - [Reference genome for human chromosome 21 and necessary databases](#reference-genome-for-human-chromosome-21-and-necessary-databases)
     - [1. Reference genome](#1-reference-genome)
-      - [OR](#or)
     - [2. dbsnp\_146 database](#2-dbsnp_146-database)
     - [3. 1000G\_omni2.5.hg38 known snps database](#3-1000g_omni25hg38-known-snps-database)
     - [4. 1000G\_phase1 snps with high confidence hg38 database](#4-1000g_phase1-snps-with-high-confidence-hg38-database)
@@ -55,7 +54,7 @@ Please download the reference genome and databases required for this variant cal
 
 One can navigate to UCSC sequence data by chromosome using this link: [UCSC_hg38_sequence_data_by_chromosome](https://hgdownload.soe.ucsc.edu/goldenPath/hg38/chromosomes/), then choose to download "chr21.fa.gz" reference fasta file.
 
-#### OR
+OR
 
 ```bash
 wget https://hgdownload.soe.ucsc.edu/goldenPath/hg38/chromosomes/chr21.fa.gz
