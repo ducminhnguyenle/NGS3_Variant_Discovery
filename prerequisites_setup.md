@@ -1,8 +1,8 @@
-# VARIANT CALLING
+# PREREQUISITE PREPARATION
 Following GATK4 best practices workflow: **_[GATK_Germline_Short_Variant_Discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-)_**
 
 ## Table of Contents
-- [VARIANT CALLING](#variant-calling)
+- [PREREQUISITE PREPARATION](#prerequisite-preparation)
   - [Table of Contents](#table-of-contents)
   - [Tools](#tools)
     - [1. bcftools](#1-bcftools)
