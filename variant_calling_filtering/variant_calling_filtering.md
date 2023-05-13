@@ -13,7 +13,7 @@
     - [1. CNNScoreVariants](#1-cnnscorevariants)
     - [2. FilterVariantTranches](#2-filtervarianttranches)
       - [Variant Genotype Filters](#variant-genotype-filters)
-    - [3. Hard Filtering option](#3-hard-filtering-option)
+    - [3. Hard Filtering](#3-hard-filtering)
 
 ## VARIANT CALLING
 
@@ -32,11 +32,11 @@ flowchart TD
 
 ```bash
 # Set up your own path to both fasta reference, recalibrated bam file and output variant calling folder
-reference="${known_snps}/chr21.fa.gz"
-recal_reads="${known_snps}/chr21_tumor_recal.bam"
-output_vcf="${known_snps}/variant_calling"
-known_snps="${known_snps}/known_snps"
-known_indels="${known_snps}/known_indels"
+reference="path/to/reference/UCSC_hg38/chr21.fa.gz"
+recal_reads="path/to/alignment/chr21_tumor_recal.bam"
+output_vcf="path/to/variant_calling"
+known_snps="path/to/reference/GATKBundle/known_snps"
+known_indels="path/to/reference/GATKBundle/known_indels"
 ```
 
 ### 2. FASTA - Reference genome format
@@ -46,17 +46,17 @@ known_indels="${known_snps}/known_indels"
 1. Create the FASTA index file (only bgzip can be indexed)
 
     ```bash
-    reference="${known_snps}/chr21.fa.gz"
+    reference="path/to/reference/UCSC_hg38/chr21.fa.gz"
 
     gzip -d ${reference}
     bgzip ${reference%.*} 
-    samtools faidx $reference
+    samtools faidx ${reference}
     ```
 
 2. Create the FASTA sequence dictionary file
 
     ```bash
-    reference="${known_snps}/chr21.fa.gz"
+    reference="path/to/reference/UCSC_hg38/chr21.fa.gz"
     gatk CreateSequenceDictionary -R ${reference}
     ```
 
@@ -72,7 +72,7 @@ known_indels="${known_snps}/known_indels"
 ### 3. HaplotypeCaller
 
 ```bash
-output_vcf="${known_snps}/variant_calling"
+output_vcf="path/to/variant_calling"
 
 gatk --java-options "-Xmx4G" HaplotypeCaller \
     -R ${reference} \
@@ -92,6 +92,9 @@ flowchart TD
     end
 ```
 
+**NOTE:**
+In order to run [CNNSCoreVariants](#1-cnnscorevariants) and [FilterVariantsTranches](#2-filtervarianttranches) tools, one need to set up [Python Dependencies](https://github.com/broadinstitute/gatk#python) environment.
+
 ### 1. CNNScoreVariants
 
 ```bash
@@ -110,7 +113,7 @@ gatk --java-options "-Xmx4G" FilterVariantTranches \
     --resource "${known_snps}/1000G_omni2.5.hg38.vcf.gz" \
     --resource "${known_snps}/1000G_phase1.snps.high_confidence.hg38.vcf.gz" \
     --resource "${known_indels}/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz" \
-    --resource "${known_indels}/known_indels/Homo_sapiens_assembly38.known_indels.vcf.gz" \
+    --resource "${known_indels}/Homo_sapiens_assembly38.known_indels.vcf.gz" \
     -O "${output_vcf}/chr21_tumor_filtered.vcf" \
     --snp-tranche 99.95 \
     --indel-tranche 99.4 \
@@ -135,14 +138,31 @@ flowchart TD
     end
 ```
 
-### 3. Hard Filtering option
+### 3. Hard Filtering
+
+If one can not run both [CNNScoreVariants](#1-cnnscorevariants) and [FilterVariantTranches](#2-filtervarianttranches) tools, please follow  this [Hard Filtering](#3-hard-filtering) option.
+
+**Note**:
+Variant filtering using ***Hard filtering*** option will be run after variant calling step with HaplotypeCaller, which is the same as CNNScore filtering process.
+
+If one has already run variant filtering with **CNNScoreVariant** option, there is no need to filter with **Hard Filtering** option anymore.
 
 - #### Extract SNPs and INDELS
 
 ```bash
-gatk SelectVariants -R ${reference} -V "${output_vcf}/chr21_tumor_raw_variants.vcf" --select-type SNP -O ${output_vcf}/chr21_tumor_raw_snps.vcf
+gatk SelectVariants \
+    -R ${reference} \
+    -V "${output_vcf}/chr21_tumor_raw_variants.vcf" \
+    --select-type SNP \
+    -O ${output_vcf}/chr21_tumor_raw_snps.vcf
+```
 
-gatk SelectVariants -R ${reference} -V "${output_vcf}/chr21_tumor_raw_variants.vcf" --select-type INDEL -O ${output_vcf}/chr21_tumor_raw_indels.vcf
+```bash
+gatk SelectVariants \
+    -R ${reference} \
+    -V "${output_vcf}/chr21_tumor_raw_variants.vcf" \
+    --select-type INDEL \
+    -O ${output_vcf}/chr21_tumor_raw_indels.vcf
 ```
 
 - #### Filter SNPs
@@ -150,7 +170,7 @@ gatk SelectVariants -R ${reference} -V "${output_vcf}/chr21_tumor_raw_variants.v
 ```bash
 gatk VariantFiltration \
     -R ${reference} \
-    -V "${output_vcf}/chr21_tumor_raw_variants.vcf" \
+    -V "${output_vcf}/chr21_tumor_raw_snps.vcf" \
     -O "${output_vcf}/chr21_tumor_filtered_snps.vcf" \
     -filter-name "QD_filter" -filter "QD < 2.0" \
     -filter-name "FS_filter" -filter "FS > 60.0" \
@@ -169,7 +189,7 @@ gatk VariantFiltration \
 ```bash
 gatk VariantFiltration \
     -R ${reference} \
-    -V "${output_vcf}/chr21_tumor_raw_variants.vcf" \
+    -V "${output_vcf}/chr21_tumor_raw_indels.vcf" \
     -O "${output_vcf}/chr21_tumor_filtered_indels.vcf" \
     -filter-name "QD_filter" -filter "QD < 2.0" \
     -filter-name "FS_filter" -filter "FS > 200.0" \
@@ -200,7 +220,9 @@ gatk SelectVariants \
 - #### Exclude variants that failed genotype filters
 
 ```bash
-cat "${output_vcf}/chr21_tumor_ready_snps.vcf" | grep -v -E "DP_filter|GQ_filter" > chr21_tumor_ready_snpsGT.vcf
+cat "${output_vcf}/chr21_tumor_ready_snps.vcf" | grep -v -E "DP_filter|GQ_filter" > ${output_vcf}/chr21_tumor_ready_snpsGT.vcf
+```
 
-cat "${output_vcf}/chr21_tumor_ready_indels.vcf" | grep -v -E "DP_filter|GQ_filter" > chr21_tumor_ready_indelsGT.vcf
+```bash
+cat "${output_vcf}/chr21_tumor_ready_indels.vcf" | grep -v -E "DP_filter|GQ_filter" > ${output_vcf}/chr21_tumor_ready_indelsGT.vcf
 ```
