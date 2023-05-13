@@ -6,7 +6,7 @@
   - [Table of Contents](#table-of-contents)
   - [VARIANT CALLING](#variant-calling)
     - [1. Workflow of variant calling using HaplotypeCaller](#1-workflow-of-variant-calling-using-haplotypecaller)
-      - [Setup directories path](#setup-directories-path)
+      - [Setup working directories](#setup-working-directories)
     - [2. FASTA - Reference genome format](#2-fasta---reference-genome-format)
     - [3. HaplotypeCaller](#3-haplotypecaller)
   - [VARIANT FILTERING (QUALITY-BASED FILTERING)](#variant-filtering-quality-based-filtering)
@@ -31,7 +31,9 @@ flowchart TD
 
 ```
 
-#### Setup directories path
+#### Setup working directories
+
+- Directories absolute path:
 
 ```bash
 # Set up your own path to both fasta reference, recalibrated bam file and output variant calling folder
@@ -40,6 +42,53 @@ recal_reads="path/to/alignment/chr21_tumor_recal.bam"
 output_vcf="path/to/variant_calling"
 known_snps="path/to/reference/GATKBundle/known_snps"
 known_indels="path/to/reference/GATKBundle/known_indels"
+```
+
+- Directories structure:
+
+```text
+Variant_Discovery/
+|-- alignment/
+|    |--chr21_tumor_recal.bai
+|    `--chr21_tumor_recal.bam
+|-- reference/
+|    |-- GATKBundle/
+|    |    |-- known_indels/
+|    |    |    |-- Homo_sapiens_assembly38.known_indels.vcf.gz
+|    |    |    |-- Homo_sapiens_assembly38.known_indels.vcf.gz.tbi
+|    |    |    |-- Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+|    |    |    `-- Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi
+|    |    `-- known_snps/
+|    |         |-- 1000G_omni2.5.hg38.vcf.gz
+|    |         |-- 1000G_omni2.5.hg38.vcf.gz.tbi
+|    |         |-- 1000G_phase1.snps.high_confidence.hg38.vcf.gz
+|    |         |-- 1000G_phase1.snps.high_confidence.hg38.vcf.gz.tbi
+|    |         |-- dbsnp_146.hg38.vcf.gz
+|    |         `-- dbsnp_146.hg38.vcf.gz.tbi
+|    `-- UCSC_hg38/
+|         |-- chr21.dict
+|         |-- chr21.fa.gz
+|         |-- chr21.fa.gz.fai
+|         `-- chr21.fa.gz.gzi
+|-- script/
+|    `-- variant_calling_filtering.sh
+`-- variant_calling/
+     |-- chr21_tumor_raw_variants.vcf
+     |-- chr21_tumor_raw_variants.vcf.idz
+     |-- chr21_tumor_raw_snps.vcf
+     |-- chr21_tumor_raw_snps.vcf.idx
+     |-- chr21_tumor_raw_indels.vcf
+     |-- chr21_tumor_raw_indels.vcf.idx
+     |-- chr21_tumor_filtered_snps.vcf
+     |-- chr21_tumor_filtered_snps.vcf.idx
+     |-- chr21_tumor_filtered_indels.vcf
+     |-- chr21_tumor_filtered_indels.vcf.idx
+     |-- chr21_tumor_ready_snps.vcf
+     |-- chr21_tumor_ready_snps.vcf.idx
+     |-- chr21_tumor_ready_snpsGT.vcf
+     |-- chr21_tumor_ready_indels.vcf
+     |-- chr21_tumor_ready_indels.vcf.idx
+     `-- chr21_tumor_ready_indelsGT.vcf
 ```
 
 ### 2. FASTA - Reference genome format
