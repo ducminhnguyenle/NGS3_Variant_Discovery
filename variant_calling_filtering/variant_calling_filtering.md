@@ -26,6 +26,9 @@ flowchart TD
     style A fill:#34495e,stroke:#333,stroke-width:4px,color:#fff
     style B fill:#767076,stroke:#F9F2F4,stroke-width:2px,color:#fff
     end
+    C{{"Reference genome preparation<br>FASTA"}} --"Index\nSequenceDictionary"--> B
+    style C fill:#5f51fe,stroke:#F9F2F4,stroke-width:2px,color:#fff
+
 ```
 
 #### Setup directories path
