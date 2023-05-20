@@ -6,6 +6,8 @@ This repo is for implementing a practical workflow for variant discovery based o
 
 2. Variant calling and filtering workflow can be found [here](./variant_calling_filtering/variant_calling_filtering.md).
 
+3. Variant annotation workflow can be found [here](./variant_annotation/variant_annotation.md).
+
 ## Main steps for Germline Single-Sample Data
 
 ![Main steps for Germline Single-Sample Data](https://github.com/ducminhnguyenle/NGS3_Variant_Discovery/assets/116794443/a1dd35ff-7016-437f-9587-4fdc0c56d3d1)
